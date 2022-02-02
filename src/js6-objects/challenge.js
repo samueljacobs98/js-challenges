@@ -21,7 +21,7 @@
  * @return {number} The price of the piece of furniture
  */
 export const getFurniturePrice = (furniture) => {
-  /* Write code here */
+  return furniture.price;
 };
 
 /**
@@ -32,7 +32,8 @@ export const getFurniturePrice = (furniture) => {
  * @returns {{name: string, price: number, location: string}} furniture - A furniture object from the catalogue
  */
 export const setFurnitureStoreLocation = (furniture, location) => {
-  /* Write code here */
+  furniture.location = location;
+  return furniture;
 };
 
 /**
@@ -46,7 +47,12 @@ export const setFurnitureStoreLocation = (furniture, location) => {
  * @returns {{name: string, noOfSeats: number, engineType: string, canTravelSolarSystems: boolean}} spaceship - The space ship object
  */
 export const makeSpaceship = (name, noOfSeats, engineType, canTravelSolarSystems) => {
-  /* Write code here */
+ const spaceship = {};
+ spaceship.name = name;
+ spaceship.noOfSeats = noOfSeats;
+ spaceship.engineType = engineType;
+ spaceship.canTravelSolarSystems = canTravelSolarSystems;
+ return spaceship; 
 };
 
 /* Intermediate Challenges */
@@ -59,7 +65,10 @@ export const makeSpaceship = (name, noOfSeats, engineType, canTravelSolarSystems
  * @returns {{name: string, username: string}} User - The user object with the same username or a new one
  */
 export const setUserName = (user, username) => {
-  /* Write code here */
+  if (!("username" in user) == true) {
+    user.username = username;
+  }
+  return user;
 };
 
 /**
@@ -70,7 +79,9 @@ export const setUserName = (user, username) => {
  * @returns {{fullName: string, firstName: string, lastName: string}} A customer object from the database with the name separated into first and last
  */
 export const splitFullNameToFirstAndLast = (customer) => {
-  /* Write code here */
+  customer.firstName = customer.fullName.split(" ")[0];
+  customer.lastName = customer.fullName.split(" ")[1];
+  return customer;
 };
 
 /**
@@ -83,7 +94,7 @@ export const splitFullNameToFirstAndLast = (customer) => {
  * @returns {any} value - The value you have accessed on the object
  */
 export const accessGivenKey = (object, key) => {
-  /* Write code here */
+  return object[key];
 };
 
 /* Advanced Challenges */
@@ -96,7 +107,8 @@ export const accessGivenKey = (object, key) => {
  * @returns {string} An address string for a shipping label
  */
 export const getUserAddress = (user) => {
-  /* Write code here */
+  const returnAddress = Object.values(user.address).join(" ");
+  return returnAddress;
 };
 
 /**
@@ -108,7 +120,40 @@ export const getUserAddress = (user) => {
  * @return {{id: number, name: string, allergies: string[], safeAllergens: string[]}} customer
  */
 export const setSafeAllergens = (customer, allergenList) => {
-  /* Write code here */
+  let safeAllergens = [];
+  let k = 0;
+  let safe = [];
+
+  if (customer.allergies.length == 0) {
+    safeAllergens = allergenList;
+  } else {
+    for (
+      let allergenListIndex = 0;
+      allergenListIndex < allergenList.length;
+      allergenListIndex++
+    ) {
+      safe[allergenListIndex] = 0;
+      for (
+        let allergiesListIndex = 0;
+        allergiesListIndex < customer.allergies.length;
+        allergiesListIndex++
+      ) {
+        if (
+          allergenList[allergenListIndex] !=
+          customer.allergies[allergiesListIndex]
+        ) {
+          safe[allergenListIndex]++;
+        }
+      }
+      if (safe[allergenListIndex] == customer.allergies.length) {
+        safeAllergens[k] = allergenList[allergenListIndex];
+        k++;
+      }
+    }
+  }
+
+  customer.safeAllergens = safeAllergens;
+  return customer;
 };
 
 /* Expert Challenge */
@@ -122,5 +167,17 @@ export const setSafeAllergens = (customer, allergenList) => {
  * @returns {{id: number, location: string, sku: string, name: string, price: number, isAvailable: boolean}}
  */
 export const mergeFurniture = (furnitureLocationData, furnitureProductData) => {
-  /* Write code here */
+  const returnObject = {};
+
+  for (let i = 0; i < Object.keys(furnitureLocationData).length; i++) {
+    returnObject[`${String(Object.keys(furnitureLocationData)[i])}`] =
+    Object.values(furnitureLocationData)[i];
+  }
+
+  for (let i = 1; i < Object.keys(furnitureProductData).length; i++) {
+    returnObject[`${String(Object.keys(furnitureProductData)[i])}`] =
+    Object.values(furnitureProductData)[i];
+  }
+
+  return returnObject;
 };

@@ -22,7 +22,10 @@
  */
 
 export const totalScoresArr = (scoresArr) => {
-  return;
+  const totalScores = scoresArr.reduce((accumulator, current) => {
+    return accumulator + current;
+  }, 0)
+  return totalScores;
 };
 
 /**
@@ -35,7 +38,9 @@ export const totalScoresArr = (scoresArr) => {
  */
 
 export const reverseString = (toReverse) => {
-  return;
+  const splitString = toReverse.split("").reverse();
+  const reverseString = splitString.join("");
+  return reverseString;
 };
 
 /**
@@ -48,7 +53,11 @@ export const reverseString = (toReverse) => {
  */
 
 export const sortCharactersAlphabetically = (charcterArr) => {
-  return;
+  var characterAZ = charcterArr.map((item) => {
+    return item.toLowerCase();
+  });
+  characterAZ.sort();
+  return characterAZ;
 };
 
 /**
@@ -63,7 +72,11 @@ export const sortCharactersAlphabetically = (charcterArr) => {
  */
 
 export const sortNumbersHighToLow = (numberArr) => {
-  return;
+  var orderedArr = [...numberArr];
+  orderedArr.sort( function(a,b) {
+    return b - a;
+  });
+  return orderedArr;
 };
 
 /**
@@ -94,7 +107,16 @@ export const checkItemInstock = (toCheck) => {
     "blueberry",
     "melon",
   ];
-  return;
+
+  var checkString = stockList.filter((item) => item.includes(toCheck));
+  var returnString = "";
+
+  if (checkString.length === 0) {
+    returnString = `Sorry ${toCheck} is not instock.`;
+  } else {
+    returnString = `${toCheck} is instock, it is on aisle ${stockList.indexOf(toCheck)}.`;
+  }
+  return returnString;
 };
 
 /**
@@ -108,7 +130,25 @@ export const checkItemInstock = (toCheck) => {
  */
 
 export const checkPrimaryColours = (coloursArr) => {
-  return;
+  const primaryColoursArr = ["red", "blue", "yellow"];
+  var nonPrimary = 0;
+  coloursArr.forEach((item) => {
+    if (primaryColoursArr.includes(item)) {
+      return;
+    } else {
+      nonPrimary++;
+    }
+  });
+
+  var response;
+
+  if (nonPrimary != 0) {
+    response = false;
+  } else {
+    response = true;
+  }
+
+  return response;
 };
 
 /**
@@ -125,7 +165,13 @@ export const checkPrimaryColours = (coloursArr) => {
  */
 
 export const checkStringPalindrome = (stringOne) => {
-  return;
+  const reverse = stringOne.split("").reverse().join("");
+
+  if (stringOne == reverse) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 /**
@@ -139,7 +185,15 @@ export const checkStringPalindrome = (stringOne) => {
  */
 
 export const totalNestedScoresArr = (scoresArr) => {
-  return;
+  var sum = [];
+
+  for (let i = 0; i < scoresArr.length; i++) {
+    sum.push(0);
+    for (let j = 0; j < scoresArr[i].length; j++) {
+      sum[i] += scoresArr[i][j];
+    }
+  }
+  return sum;
 };
 
 /**
@@ -172,5 +226,17 @@ export const totalNestedScoresArr = (scoresArr) => {
  */
 
 export const encryptString = (toEncrypt) => {
-  return;
+  const encrypted = toEncrypt
+    .split("")
+    .reduce(
+      (accumulator, currentValue, i) => {
+        const excess = i % 3;
+        accumulator[excess].push(currentValue);
+        return accumulator;
+      },
+      [[],[],[]]
+    )
+    .flat()
+    .join("");
+  return encrypted;
 };
