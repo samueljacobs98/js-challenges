@@ -17,7 +17,9 @@
  * @returns {string[]} A list of the employees quotes for the website
  */
 export const getEmployeeQuotes = (employeeArr) => {
-  // Write code here
+  const quotes = employeeArr.map((employee) => {
+    return employee.quote})
+  return quotes
 };
 
 /**
@@ -27,8 +29,9 @@ export const getEmployeeQuotes = (employeeArr) => {
  * @returns {{name: string, quote: string, yearsEmployed: number, isManagement: boolean}[]} An array containing only managers
  */
 export const getTheManagers = (employeeArr) => {
-  // Write code here
-};
+  const managers = employeeArr.filter((employee) => {
+    return employee.isManagement})
+  return managers};
 
 /**
  * A function which tells you the number of keys on the provided object.
@@ -37,7 +40,7 @@ export const getTheManagers = (employeeArr) => {
  * @returns {number} The number of the keys on the object
  */
 export const getNumberOfKeys = (object) => {
-  // Write code here
+  return Object.keys(object).length
 };
 
 /* Intermediate Challenges */
@@ -50,7 +53,17 @@ export const getNumberOfKeys = (object) => {
  * @returns {{name: string, price: number, hasFreeShipping: boolean, quantity: number}} The most expensive item in the shopping basket
  */
 export const findMostExpensiveItem = (shoppingBasketArr) => {
-  // Write code here
+  let highestPrice = 0;
+  let highestPriceIndex = 0;
+
+  for (let i = 0; i < shoppingBasketArr.length; i++) {
+    if (shoppingBasketArr[i].price > highestPrice) {
+      highestPrice = shoppingBasketArr[i].price;
+      highestPriceIndex = i;
+    }
+  }
+  // console.log(shoppingBasketArr[highestPriceIndex])
+  return shoppingBasketArr[highestPriceIndex]
 };
 
 /**
@@ -69,7 +82,16 @@ export const findMostExpensiveItem = (shoppingBasketArr) => {
  * @returns {{name: string, price: number, hasFreeShipping: boolean, quantity: number, totalPrice: number}[]} A new array where each object has had a total price added to it
  */
 export const settotalPrice = (shoppingBasketArr) => {
-  // Write code here
+  const updatedShoppingBasketArr = shoppingBasketArr.map((item) => {
+    const newObject = {
+      ...item,
+      totalPrice: item.price * item.quantity,
+    };
+    return newObject;
+  })
+
+  // console.log(shoppingBasketArr)
+  return updatedShoppingBasketArr
 };
 
 /**
@@ -79,7 +101,11 @@ export const settotalPrice = (shoppingBasketArr) => {
  * @returns {number} The total cost of the order
  */
 export const totalShoppingBasket = (shoppingBasketArr) => {
-  // Write code here
+  let totalCost = 0;
+  shoppingBasketArr.forEach(item => {
+    totalCost += item.totalPrice
+  })
+  return totalCost
 };
 
 /* Advanced Challenges */
@@ -92,7 +118,15 @@ export const totalShoppingBasket = (shoppingBasketArr) => {
  * @returns {{id: number, name: string, ingredients: string[], country: string}[]} An array of cleaned meal objects
  */
 export const getImportantKeys = (mealsArr) => {
-  // Write code here
+  let importantKeys = mealsArr.map((meal) => {
+    const newObject = {
+      ...meal
+    }
+    delete newObject.timeStamp
+    delete newObject.userCreated
+    return newObject
+  })
+  return importantKeys
 };
 
 /**
@@ -106,7 +140,21 @@ export const getImportantKeys = (mealsArr) => {
  * @returns {{id: number, name: string, ingredients: string[], country: string, isVegetarian: boolean, timeToCook: number}[]}
  */
 export const setImportantKeys = (mealsArr) => {
-  // Write code here
+  let updatedMealsArr = mealsArr.map((meal) => {
+    const newObject = {
+      ...meal
+    }
+    
+    if (!newObject.hasOwnProperty("isVegetarian")) {
+      newObject.isVegetarian = false
+    }
+    if (!newObject.hasOwnProperty("timeToCook")) {
+      newObject.timeToCook = 15
+    }
+    
+    return newObject
+  })
+  return updatedMealsArr
 };
 
 /* Expert Challenge */
@@ -138,5 +186,35 @@ export const setImportantKeys = (mealsArr) => {
  * }[]} A Cleaned array of cocktail data
  */
 export const cleanCocktailResponseData = (cocktailData) => {
-  // Write code here
+  let cleanData = cocktailData.map((data) => {
+    let ingredientsArr = [];
+    if (typeof data.strIngredient1 === "string") {
+      ingredientsArr.push(data.strIngredient1)
+    }
+    if (typeof data.strIngredient2 === "string") {
+      ingredientsArr.push(data.strIngredient2)
+    }
+    if (typeof data.strIngredient3 === "string") {
+      ingredientsArr.push(data.strIngredient3)
+    }
+    if (typeof data.strIngredient4 === "string") {
+      ingredientsArr.push(data.strIngredient4)
+    }
+    if (typeof data.strIngredient5 === "string") {
+      ingredientsArr.push(data.strIngredient5)
+    }
+    if (typeof data.strIngredient6 === "string") {
+      ingredientsArr.push(data.strIngredient6)
+    }
+    const newObject = {
+      id: data.idDrink,
+      drink: data.strDrink,
+      category: data.strCategory,
+      alcoholic: data.strAlcoholic,
+      instructions: data.strInstructions,
+      ingredients: ingredientsArr,
+    }
+    return newObject
+  })
+  return cleanData
 };

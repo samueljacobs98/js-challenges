@@ -22,7 +22,7 @@ describe("getFurniturePrice() tests", () => {
   });
 });
 
-xdescribe("addFurnitureStorLocation() tests", () => {
+describe("addFurnitureStorLocation() tests", () => {
   const table = { name: "lack", price: 6 };
   const cabinet = { name: "brimnes", price: 55 };
 
@@ -51,7 +51,7 @@ xdescribe("addFurnitureStorLocation() tests", () => {
   });
 });
 
-xdescribe("makeSpaceship() tests", () => {
+describe("makeSpaceship() tests", () => {
   it("Should return an object", () => {
     expect(typeof makeSpaceship("rocinante", 8, "epstein drive", true)).toBe("object");
   });
@@ -69,7 +69,7 @@ xdescribe("makeSpaceship() tests", () => {
   });
 });
 
-xdescribe("setUserName() tests", () => {
+describe("setUserName() tests", () => {
   const user1 = { name: "john smith", username: "johnnyboiii" };
   const user2 = { name: "jane doe", username: "killerZ" };
   it("Should return and object", () => {
@@ -93,7 +93,7 @@ xdescribe("setUserName() tests", () => {
   });
 });
 
-xdescribe("splitFullNameToFirstAndLast() tests", () => {
+describe("splitFullNameToFirstAndLast() tests", () => {
   const customer1 = { fullName: "Barry Chuckle" };
   const customer2 = { fullName: "Paul Chuckle" };
 
@@ -112,7 +112,7 @@ xdescribe("splitFullNameToFirstAndLast() tests", () => {
   });
 });
 
-xdescribe("accessGivenKey() tests", () => {
+describe("accessGivenKey() tests", () => {
   const person = { name: "Joe Bloggs", height: 170, eyeColour: "blue", likesIceCream: false };
 
   it("Should access the eyeColour property", () => {
@@ -132,7 +132,7 @@ xdescribe("accessGivenKey() tests", () => {
   });
 });
 
-xdescribe("getUserAddress() tests", () => {
+describe("getUserAddress() tests", () => {
   const user1 = {
     id: 101,
     name: "Harry Potter",
@@ -161,7 +161,7 @@ xdescribe("getUserAddress() tests", () => {
   });
 });
 
-xdescribe("setSafeAllergens() tests", () => {
+describe("setSafeAllergens() tests", () => {
   const allergenList = [
     "celery",
     "gluten",
@@ -247,7 +247,7 @@ xdescribe("setSafeAllergens() tests", () => {
   });
 });
 
-xdescribe("mergeFurniture() tests", () => {
+describe("mergeFurniture() tests", () => {
   const tableLocationInfo = { id: 101, location: "Bristol", sku: "bXpGsZC2j4" };
   const tableProductInfo = { id: 101, name: "lack", price: 6, isAvailable: true };
 

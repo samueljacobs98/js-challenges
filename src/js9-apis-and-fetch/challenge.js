@@ -17,8 +17,10 @@
  * @param {string} url - The url of the API to fetch from
  * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean}[]} The data from the API
  */
- export const getData = (url) => {
-  // Your code here
+export const getData = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 };
 
 /**
@@ -27,8 +29,11 @@
  * @param {string} url - The url of the API to fetch from
  * @returns {string[]} The list of names from the API
  */
-export const getNames = (url) => {
-  // Your code here
+export const getNames = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  const names = data.map((object) => object.name);
+  return names;
 };
 
 /**
@@ -37,8 +42,11 @@ export const getNames = (url) => {
  * @param {string} url - The url of the API to fetch from
  * @return {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean}[]} The employed people from the API
  */
-export const getEmployedPeople = (url) => {
-  // Your code here
+export const getEmployedPeople = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  const employees = data.filter((person) => person.isEmployed);
+  return employees;
 };
 
 /* Intermediate Challenges */
@@ -51,8 +59,16 @@ export const getEmployedPeople = (url) => {
  * @param {string} id - The ID of the person object to return
  * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean} | string} A person object OR A string saying "Person not found"
  */
-export const findPersonWithId = (url, id) => {
-  // Your code here
+export const findPersonWithId = async (url, id) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  const toReturn = data.filter((object) => object.id === id);
+
+  if (toReturn.length) {
+    return toReturn[0];
+  } else {
+    return "Person not found";
+  }
 };
 
 /**
@@ -63,8 +79,18 @@ export const findPersonWithId = (url, id) => {
  * @param {string} interest - The interest to match
  * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean}[] | string} A group of person objects OR A string saying "No people with interest found"
  */
-export const getPeopleWithMatchingInterests = (url, interest) => {
-  // Your code here
+export const getPeopleWithMatchingInterests = async (url, interest) => {
+  const response = await fetch(url);
+  const data = await response.json();
+
+  const sharedInterest = data.filter((object) =>
+    object.interests.includes(interest)
+  );
+  if (sharedInterest.length) {
+    return sharedInterest;
+  } else {
+    return "No people with interest found";
+  }
 };
 
 /* Advanced Challenges */
@@ -82,6 +108,7 @@ export const getPeopleWithMatchingInterests = (url, interest) => {
  *   interests: ["knitting", "baking", "MMA"],
  *   isEmployed: false,
  *   description: "My name is Joanna, I am 78 years old and 140cm tall. I enjoy knitting, baking, and MMA. I am not currently employed"
+ *   description: `My name is ${object.name}, I am ${object.age} years old and ${object.height}cm tall. I enjoy ${object.interests[0]}, ${object.interests[1]}, and ${object.interests[2]}. I am not currently employed`
  * }
  *
  * OR
@@ -99,10 +126,23 @@ export const getPeopleWithMatchingInterests = (url, interest) => {
  * This should NOT modify the original data
  *
  * @param {string} url - The url of the API to fetch from
- * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean, decscription: string}[]} A group of person objects with added description key
+ * @returns {{id: string, name: string, age: number, height: number, interests: string[], isEmployed: boolean, description: string}[]} A group of person objects with added description key
  */
-export const setDescriptions = (url) => {
-  // Your code here
+export const setDescriptions = async (url) => {
+  const response = await fetch(url);
+  const data = await response.json();
+  const array = data.map((object) => {
+    const newObject = { ...object };
+    return newObject;
+  });
+  array.forEach((personObject) => {
+    if (personObject.isEmployed) {
+      personObject.description = `My name is ${personObject.name}, I am ${personObject.age} years old and ${personObject.height}cm tall. I enjoy ${personObject.interests[0]}, ${personObject.interests[1]} and ${personObject.interests[2]}. I am currently employed`;
+    } else {
+      personObject.description = `My name is ${personObject.name}, I am ${personObject.age} years old and ${personObject.height}cm tall. I enjoy ${personObject.interests[0]}, ${personObject.interests[1]} and ${personObject.interests[2]}. I am not currently employed`;
+    }
+  });
+  return array;
 };
 
 /* Expert Challenges */
@@ -151,6 +191,32 @@ export const setDescriptions = (url) => {
  *  isEmployed: boolean,
  * }[]}
  */
-export const setInterestDetails = (peopleUrl, interestsUrl) => {
-  // Your code here
+export const setInterestDetails = async (peopleUrl, interestsUrl) => {
+  const peopleResponse = await fetch(peopleUrl);
+  const peopleData = await peopleResponse.json();
+
+  const interestsResponse = await fetch(interestsUrl);
+  const interestsData = await interestsResponse.json();
+
+  const peopleDataArray = peopleData.map((object) => {
+    const newObject = { ...object };
+    newObject.interests = [...newObject.interests];
+    return newObject;
+  });
+  const interestsDataArray = interestsData.map((object) => {
+    const newObject = { ...object };
+    return newObject;
+  });
+
+  peopleDataArray.forEach((person) => {
+    interestsDataArray.forEach((interestDetails) => {
+      const interestString = interestDetails.interest;
+      if (person.interests.includes(interestString)) {
+        const index = person.interests.indexOf(interestString);
+        person.interests[index] = { ...interestDetails };
+      }
+    });
+  });
+
+  return peopleDataArray;
 };

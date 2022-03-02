@@ -49,7 +49,7 @@ describe("Testing removeFalseValues()", () => {
   });
 });
 
-xdescribe("Testing createPercentageList()", () => {
+describe("Testing createPercentageList()", () => {
   it("Should return an array", () => {
     expect(Array.isArray(createPercentageList(toBePercentages))).toBe(true);
   });
@@ -70,7 +70,7 @@ xdescribe("Testing createPercentageList()", () => {
   });
 });
 
-xdescribe("Testing createListOfPoessessions()", () => {
+describe("Testing createListOfPoessessions()", () => {
   it("Should return an array", () => {
     expect(Array.isArray(createListOfPoessessions(possessions, "Matt's"))).toBe(true);
   });
@@ -97,7 +97,7 @@ xdescribe("Testing createListOfPoessessions()", () => {
   });
 });
 
-xdescribe("Testing convertStringToNumbersArray()", () => {
+describe("Testing convertStringToNumbersArray()", () => {
   it("Should return an array", () => {
     expect(Array.isArray(convertStringToNumbersArray(numbersCSV))).toBe(true);
   });
@@ -123,7 +123,7 @@ xdescribe("Testing convertStringToNumbersArray()", () => {
   });
 });
 
-xdescribe("Testing createOddEvenArray()", () => {
+describe("Testing createOddEvenArray()", () => {
   it("Should return an array", () => {
     expect(Array.isArray(createOddEvenArray(numbersCSV))).toBe(true);
   });
@@ -149,7 +149,7 @@ xdescribe("Testing createOddEvenArray()", () => {
   });
 });
 
-xdescribe("Testing filterBooksBySearch()", () => {
+describe("Testing filterBooksBySearch()", () => {
   it("Should return an array", () => {
     expect(Array.isArray(filterBooksBySearch(["one thing"], "one thing"))).toBe(true);
   });
@@ -188,7 +188,7 @@ xdescribe("Testing filterBooksBySearch()", () => {
   });
 });
 
-xdescribe("Testing formatStringArray()", () => {
+describe("Testing formatStringArray()", () => {
   it("Should return a String", () => {
     expect(typeof formatStringArray(["  front"])).toBe("string");
   });
@@ -218,7 +218,7 @@ xdescribe("Testing formatStringArray()", () => {
   });
 });
 
-xdescribe("Testing formatString()", () => {
+describe("Testing formatString()", () => {
   it("Should NOT return undefined", () => {
     expect(formatString("  defined")).toBeDefined();
   });
@@ -267,7 +267,7 @@ xdescribe("Testing formatString()", () => {
   });
 });
 
-xdescribe("Testing fizzBuzz()", () => {
+describe("Testing fizzBuzz()", () => {
   const cleanArray = Array(50)
     .fill(0)
     .map((_, index) => index + 1);

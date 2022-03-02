@@ -80,6 +80,8 @@ export const findType = () => {
     case "string":
       return "This is a string";
     case "number":
+      return "This is a number";
+    case "boolean":
         return "This is a boolean";
     default:
         return "I don't know what this thing is";
